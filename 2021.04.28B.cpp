@@ -9,7 +9,6 @@
  * };
  */
 #include <iostream>
-#include <vector>
 using namespace std;
 typedef struct ListNode{
     int val;
