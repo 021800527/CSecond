@@ -17,24 +17,43 @@ typedef struct ListNode{
 };
 class Solution {
 public:
-    ListNode* oddEvenList(ListNode* head) {
-        if (head== nullptr || head->next == nullptr)
-            return head;
-        //存储头结点
+    bool isPalindrome(ListNode* head) {
+        if (head == nullptr)
+            return true;
+        if (head -> next == nullptr)
+            return true;
+        //存储原来的头结点
         ListNode *oldHead = head;
-        //存储第二个结点
-        ListNode *oldSecondHead = head->next;
-        //存储头结点
-        ListNode *resoldHead = head;
-        //存储第二个结点
-        ListNode *resoldSecondHead = head->next;
-        while (oldHead->next!= nullptr&&oldSecondHead->next!= nullptr){
-            oldHead -> next = oldHead -> next -> next;
-            oldSecondHead -> next = oldSecondHead ->next->next;
-            oldHead = oldHead -> next;
-            oldSecondHead = oldSecondHead -> next;
+        //通过快慢指针找到中间结点
+        ListNode *fast = head;
+        ListNode *slow = head;
+        while (fast->next != nullptr && fast->next->next != nullptr){
+            fast = fast -> next -> next;
+            slow = slow ->next;
         }
-        oldHead -> next = resoldSecondHead;
-        return resoldHead;
+        //中间结点slow
+        //对slow后的进行倒序排序
+        ListNode *cur = slow;
+        //断开链表
+        slow = nullptr;
+        ListNode *pre = new ListNode(0);
+        pre = nullptr;
+        ListNode *centerHead = new ListNode(0);
+        while (cur!= nullptr){
+            // 存储原来的下一个位置
+            centerHead = cur -> next;
+            cur -> next = pre;
+            pre = cur ;
+            cur = centerHead;
+        }
+        //获得倒序后的头结点pre
+        //进行逐个比对
+        while (pre!=oldHead &&pre!= nullptr && oldHead!= nullptr){
+            if (pre->val != oldHead -> val)
+                return false;
+            pre = pre -> next;
+            oldHead = oldHead -> next;
+        }
+        return true;
     }
 };
