@@ -28,13 +28,13 @@ public:
         ListNode *resoldHead = head;
         //存储第二个结点
         ListNode *resoldSecondHead = head->next;
-        while (oldHead->next!= nullptr&&oldSecondHead->next!= nullptr){
+        while (oldHead!= nullptr){
             oldHead -> next = oldHead -> next -> next;
-            oldSecondHead -> next = oldSecondHead ->next->next;
+            oldSecondHead -> next = oldSecondHead ->next;
             oldHead = oldHead -> next;
             oldSecondHead = oldSecondHead -> next;
         }
-        oldHead -> next = resoldSecondHead;
+        resoldHead -> next = resoldSecondHead;
         return resoldHead;
     }
 };
